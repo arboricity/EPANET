@@ -17,9 +17,7 @@
 
 #include "test_toolkit.hpp"
 
-
-BOOST_AUTO_TEST_SUITE (test_link)
-
+BOOST_AUTO_TEST_SUITE(test_link)
 
 BOOST_FIXTURE_TEST_CASE(test_adddelete_link, FixtureInitClose)
 {
@@ -52,7 +50,6 @@ BOOST_FIXTURE_TEST_CASE(test_adddelete_link, FixtureInitClose)
     BOOST_REQUIRE(error == 0);
     error = EN_deletelink(ph, index, EN_UNCONDITIONAL);
     BOOST_REQUIRE(error == 0);
-
 }
 
 BOOST_FIXTURE_TEST_CASE(test_link_id_isvalid, FixtureInitClose)
@@ -151,42 +148,41 @@ BOOST_AUTO_TEST_CASE(test_setlinktype)
     EN_deleteproject(ph);
 }
 
-
 BOOST_AUTO_TEST_CASE(test_link_setid_save)
 {
-	int error = 0;
+    int error = 0;
 
-	EN_Project ph = NULL;
-	EN_createproject(&ph);
+    EN_Project ph = NULL;
+    EN_createproject(&ph);
 
-	error = EN_open(ph, DATA_PATH_NET1, DATA_PATH_RPT, "");
-	BOOST_REQUIRE(error == 0);
+    error = EN_open(ph, DATA_PATH_NET1, DATA_PATH_RPT, "");
+    BOOST_REQUIRE(error == 0);
 
-	// Test of illegal link name change
-	char newid_3[] = "Illegal; link name";
-	error = EN_setlinkid(ph, 3, newid_3);
-	BOOST_REQUIRE(error > 0);
+    // Test of illegal link name change
+    char newid_3[] = "Illegal; link name";
+    error = EN_setlinkid(ph, 3, newid_3);
+    BOOST_REQUIRE(error > 0);
 
-	// Test of legal link name change
-	char newid_4[] = "Link3";
-	error = EN_setlinkid(ph, 3, newid_4);
-	BOOST_REQUIRE(error == 0);
+    // Test of legal link name change
+    char newid_4[] = "Link3";
+    error = EN_setlinkid(ph, 3, newid_4);
+    BOOST_REQUIRE(error == 0);
 
-	// Save the project
-	error = EN_saveinpfile(ph, "net1_setid.inp");
-	BOOST_REQUIRE(error == 0);
+    // Save the project
+    error = EN_saveinpfile(ph, "net1_setid.inp");
+    BOOST_REQUIRE(error == 0);
 
-	error = EN_close(ph);
-	BOOST_REQUIRE(error == 0);
-	EN_deleteproject(ph);
+    error = EN_close(ph);
+    BOOST_REQUIRE(error == 0);
+    EN_deleteproject(ph);
 }
 
-BOOST_AUTO_TEST_CASE(test_link_setid_reopen, * boost::unit_test::depends_on("test_link/test_link_setid_save"))
+BOOST_AUTO_TEST_CASE(test_link_setid_reopen, *boost::unit_test::depends_on("test_link/test_link_setid_save"))
 {
-	int error = 0;
-	int index;
+    int error = 0;
+    int index;
 
-	EN_Project ph = NULL;
+    EN_Project ph = NULL;
 
     // Re-open the saved project
     EN_createproject(&ph);

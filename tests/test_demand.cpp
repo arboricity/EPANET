@@ -15,9 +15,7 @@
 
 #include "test_toolkit.hpp"
 
-
-BOOST_AUTO_TEST_SUITE (test_demand)
-
+BOOST_AUTO_TEST_SUITE(test_demand)
 
 BOOST_AUTO_TEST_CASE(test_categories_save)
 {
@@ -35,7 +33,7 @@ BOOST_AUTO_TEST_CASE(test_categories_save)
     BOOST_REQUIRE(error == 0);
     BOOST_CHECK(ndem == 1);
 
-    char demname[31];
+    char demname[127];
     error = EN_getdemandname(ph, Nindex, ndem, demname);
     BOOST_REQUIRE(error == 0);
 
@@ -50,8 +48,7 @@ BOOST_AUTO_TEST_CASE(test_categories_save)
     BOOST_REQUIRE(error == 0);
 }
 
-
-BOOST_AUTO_TEST_CASE(test_categories_reopen, * boost::unit_test::depends_on("test_demand/test_categories_save"))
+BOOST_AUTO_TEST_CASE(test_categories_reopen, *boost::unit_test::depends_on("test_demand/test_categories_save"))
 {
     int error = 0;
     int Nindex, ndem;
@@ -70,7 +67,7 @@ BOOST_AUTO_TEST_CASE(test_categories_reopen, * boost::unit_test::depends_on("tes
     BOOST_REQUIRE(error == 0);
     BOOST_CHECK(ndem == 1);
 
-    char demname[31];
+    char demname[127];
     error = EN_getdemandname(ph, Nindex, ndem, demname);
     BOOST_CHECK(error == 0);
 
@@ -135,18 +132,17 @@ BOOST_AUTO_TEST_CASE(test_cms_unit)
     error = EN_setflowunits(ph, EN_CMS);
     BOOST_REQUIRE(error == 0);
 
-    error = EN_getflowunits(ph, &flowType );
+    error = EN_getflowunits(ph, &flowType);
     BOOST_REQUIRE(error == 0);
     BOOST_REQUIRE(flowType == EN_CMS);
 
     error = EN_close(ph);
     BOOST_REQUIRE(error == 0);
 
-    error = EN_init(ph, DATA_PATH_RPT, DATA_PATH_OUT, EN_CMS+1, EN_HW);
+    error = EN_init(ph, DATA_PATH_RPT, DATA_PATH_OUT, EN_CMS + 1, EN_HW);
     BOOST_REQUIRE(error == 251);
 
     EN_deleteproject(ph);
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()
